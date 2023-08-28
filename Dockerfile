@@ -1,4 +1,3 @@
-FROM node:18
+FROM alpine
 
-# Create app directory
-WORKDIR /usr/src/app
+ENTRYPOINT echo hello medium
