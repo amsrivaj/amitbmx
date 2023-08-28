@@ -7,7 +7,7 @@ WORKDIR /workspace/output
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
-
+RUN npm config set registry https://registry.npmjs.org
 RUN npm install@latest
 # If you are building your code for production
 # RUN npm ci --omit=dev
