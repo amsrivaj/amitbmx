@@ -6,13 +6,14 @@ metadata:
   labels:
     app: app
 spec:
-  type: NodePort
   ports:
-    - port: 3300
-      name: app
-      nodePort: 32426
+    - port: 3930
+      protocol: TCP
+      targetPort:3301
   selector:
     app: app
+  sessionAffinity: None
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,4 +36,4 @@ spec:
       - name: app
         image: IMAGE
         ports:
-        - containerPort: 3300
+        - containerPort: 3301
