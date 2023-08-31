@@ -15,4 +15,5 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-ENTRYPOINT echo hello medium
+EXPOSE 4545
+CMD [ "node", "app.js" ]
