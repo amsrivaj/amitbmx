@@ -10,7 +10,7 @@ spec:
   ports:
     - port: 3930
       protocol: TCP
-      targetPort: 3301
+      targetPort: 4545
   selector:
     app: app
   sessionAffinity: None
