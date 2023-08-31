@@ -8,7 +8,7 @@ metadata:
 spec:
   serviceAccountName: my-service-account
   ports:
-    - port: 3930
+    - port: 3301
       protocol: TCP
       targetPort: 4545
   selector:
