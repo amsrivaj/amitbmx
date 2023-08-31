@@ -23,7 +23,6 @@ metadata:
   labels:
     app: app
 spec:
-  serviceAccountName: my-service-account
   replicas: 1
   selector:
     matchLabels:
@@ -33,8 +32,10 @@ spec:
       labels:
         app: app
     spec:
+      serviceAccountName: my-service-account
       containers:
       - name: app
         image: IMAGE
         ports:
         - containerPort: 3301
+        
