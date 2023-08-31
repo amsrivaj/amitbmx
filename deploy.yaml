@@ -6,7 +6,6 @@ metadata:
   labels:
     app: app
 spec:
-  serviceAccountName: my-service-account
   ports:
     - port: 3301
       protocol: TCP
