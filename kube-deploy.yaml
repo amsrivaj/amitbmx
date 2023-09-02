@@ -1,0 +1,104 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: #KS_APP_NAME#
+  labels:
+    app: #KS_APP_NAME#
+  annotations:
+    kubernetes.io/ingress.class: public-iks-k8s-nginx
+    nginx.ingress.kubernetes.io/large-client-header-buffers: #KS_INGRESS_LARGE_CLIENT_HEADER_BUFFERS#
+    nginx.ingress.kubernetes.io/proxy-body-size: 0m
+    nginx.ingress.kubernetes.io/backend-protocol: #KS_HEALTH_SCHEME#
+spec:
+  tls:
+    - hosts:
+        - #KS_APP_NAME#.#KS_CLUSTER_SUBDOMAIN#.#KS_REGION#.containers.appdomain.cloud
+        - #KS_APP_NAME#.mp.ibmcom.akadns.net
+      secretName: #KS_SECRET_NAME#
+  rules:
+    - host: #KS_APP_NAME#.#KS_CLUSTER_SUBDOMAIN#.#KS_REGION#.containers.appdomain.cloud
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: #KS_APP_NAME#
+                port:
+                  number: #KS_APP_PORT#
+    - host: #KS_APP_NAME#.mp.ibmcom.akadns.net
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: #KS_APP_NAME#
+                port:
+                  number: #KS_APP_PORT#
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: #KS_APP_NAME#
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 25%
+  revisionHistoryLimit: 1
+  replicas: #KS_INSTANCES#
+  selector:
+    matchLabels:
+      app: #KS_APP_NAME#
+  template:
+    metadata:
+      labels:
+        app: #KS_APP_NAME#
+    spec:
+      containers:
+        - name: #KS_APP_NAME#
+          image: IMAGE
+          imagePullPolicy: Always
+          env:
+            - name: INSTANA_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          envFrom:
+            - configMapRef:
+                name: #KS_APP_NAME#
+            - secretRef:
+                name: #KS_APP_NAME#
+          resources:
+            requests:
+              memory: #KS_MEMORY#
+              cpu: #KS_CPU#
+            limits:
+              memory: #KS_MEMORY_LIMIT#
+              cpu: #KS_CPU_LIMIT#
+          readinessProbe:
+            httpGet:
+              path: #KS_HEALTH_ROUTE#
+              port: #KS_APP_PORT#
+              scheme: #KS_HEALTH_SCHEME#
+            initialDelaySeconds: #KS_HEALTH_DELAY#
+            periodSeconds: #KS_HEALTH_PERIOD#
+            timeoutSeconds: #KS_HEALTH_TIMEOUT#
+      imagePullSecrets:
+        - name: all-icr-io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: #KS_APP_NAME#
+  labels:
+    app: #KS_APP_NAME#
+spec:
+  ports:
+    - port: #KS_APP_PORT#
+      protocol: TCP
+      targetPort: #KS_APP_PORT#
+  selector:
+    app: #KS_APP_NAME#
+  sessionAffinity: None
+  type: ClusterIP
