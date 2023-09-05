@@ -11,17 +11,17 @@ round()
 }
 
 KS_MEMORY=128Mi
-MEMORY=`echo ${KS_MEMORY} | sed 's/Mi//g' | sed 's/Gi/*1024/g'`
-KS_MEMORY_LIMIT=`bc -l <<< "${MEMORY} * 1.3"`
-KS_MEMORY_LIMIT=$(round $KS_MEMORY_LIMIT 0)
-KS_MEMORY_LIMIT="${KS_MEMORY_LIMIT}Mi"
+KS_MEMORY_LIMIT=526Mi
+#MEMORY=`echo ${KS_MEMORY} | sed 's/Mi//g' | sed 's/Gi/*1024/g'`
+#KS_MEMORY_LIMIT=`bc -l <<< "${MEMORY} * 1.3"`
+#KS_MEMORY_LIMIT=$(round $KS_MEMORY_LIMIT 0)
+#KS_MEMORY_LIMIT="${KS_MEMORY_LIMIT}Mi"
 
 KS_CPU_LIMIT=0.7
 
 echo "current directory is "
 pwd
 
-export KS_MEMORY=
 
 #APP_NAME
 sed -i "s/#KS_APP_NAME#/app/g" /workspace/output/kube-deploy.yaml
