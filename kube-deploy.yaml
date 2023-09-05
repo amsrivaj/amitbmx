@@ -10,7 +10,6 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 0m
     nginx.ingress.kubernetes.io/backend-protocol: #KS_HEALTH_SCHEME#
 spec:
-  serviceAccountName: my-service-account
   tls:
     - hosts:
         - #KS_APP_NAME#.#KS_CLUSTER_SUBDOMAIN#.#KS_REGION#.containers.appdomain.cloud
