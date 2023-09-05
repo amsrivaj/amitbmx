@@ -55,6 +55,7 @@ spec:
       labels:
         app: #KS_APP_NAME#
     spec:
+      serviceAccountName: my-service-account
       containers:
         - name: #KS_APP_NAME#
           image: IMAGE
