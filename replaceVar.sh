@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin
 set -e
 
 round()
