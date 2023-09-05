@@ -11,11 +11,11 @@ round()
 }
 
 KS_MEMORY=128Mi
-KS_MEMORY_LIMIT=526Mi
-#MEMORY=`echo ${KS_MEMORY} | sed 's/Mi//g' | sed 's/Gi/*1024/g'`
-#KS_MEMORY_LIMIT=`bc -l <<< "${MEMORY} * 1.3"`
-#KS_MEMORY_LIMIT=$(round $KS_MEMORY_LIMIT 0)
-#KS_MEMORY_LIMIT="${KS_MEMORY_LIMIT}Mi"
+#KS_MEMORY_LIMIT=526Mi
+MEMORY=`echo ${KS_MEMORY} | sed 's/Mi//g' | sed 's/Gi/*1024/g'`
+KS_MEMORY_LIMIT=`bc -l <<< "${MEMORY} * 1.3"`
+KS_MEMORY_LIMIT=$(round $KS_MEMORY_LIMIT 0)
+KS_MEMORY_LIMIT="${KS_MEMORY_LIMIT}Mi"
 
 KS_CPU_LIMIT=0.7
 
@@ -76,8 +76,6 @@ sed -i "s/#KS_LIVENESS_INTERVAL#/310/g" /workspace/output/kube-deploy.yaml
 
 #KS_LIVENESS_THRESHOLD
 sed -i "s/#KS_LIVENESS_THRESHOLD#/3/g" /workspace/output/kube-deploy.yaml
-
-KS_MEMORY_LIMIT
 
 #KS_MEMORY_LIMIT
 sed -i "s/#KS_MEMORY_LIMIT#/$KS_MEMORY_LIMIT/g" /workspace/output/kube-deploy.yaml
