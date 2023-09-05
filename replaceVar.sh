@@ -2,7 +2,7 @@
 set -e
 
 apt-get update
-apt-get install bc
+apt-get --assume-yes install bc
 
 
 round()
