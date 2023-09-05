@@ -82,3 +82,5 @@ sed -i "s/#KS_MEMORY_LIMIT#/$KS_MEMORY_LIMIT/g" /workspace/output/kube-deploy.ya
 
 #KS_CPU_LIMIT
 sed -i "s/#KS_CPU_LIMIT#/$KS_CPU_LIMIT/g" /workspace/output/kube-deploy.yaml
+
+cat /workspace/output/kube-deploy.yaml
