@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: #KS_APP_NAME#-configmap
+  namespace: m-platform-test
 data:
   sample.properties: |
     key4=value4
@@ -16,6 +17,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: #KS_APP_NAME#
+  namespace: m-platform-test
   labels:
     app: #KS_APP_NAME#
   annotations:
@@ -53,6 +55,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: #KS_APP_NAME#
+  namespace: m-platform-test
 spec:
   strategy:
     type: RollingUpdate
@@ -106,6 +109,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: #KS_APP_NAME#
+  namespace: m-platform-test
   labels:
     app: #KS_APP_NAME#
 spec:
